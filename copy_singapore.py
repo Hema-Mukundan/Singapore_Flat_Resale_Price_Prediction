@@ -12,7 +12,7 @@ st.set_page_config(page_title='Singapore Flat Resale Price Prediction')
 st.markdown('<h2 style="text-align: center;">Singapore Flat Resale Price Prediction</h2>', unsafe_allow_html=True)
 
 # Load Image
-image_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCfK1YMg9WyC3E1QSAD6PW7H23v6Hj3i9cGA&s'
+image_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwMOFPXQPqtqHWSwfqu0pkPo7X3yEDQv1auQ&s'
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 image = image.resize((700, 200))
