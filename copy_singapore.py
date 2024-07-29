@@ -4,40 +4,23 @@ import pandas as pd
 from joblib import load
 from sklearn.preprocessing import OneHotEncoder
 from PIL import Image
-import gdown
+import requests
+from io import BytesIO
 
 # Page configuration
 st.set_page_config(page_title='Singapore Flat Resale Price Prediction')
 st.markdown('<h2 style="text-align: center;">Singapore Flat Resale Price Prediction</h2>', unsafe_allow_html=True)
 
-# Google Drive file IDs
-model_file_id = '1rbX--6l2p5CCL3cbmTlMtdMywbEXXOUS'
-columns_file_id = '1Q1NQoIi6YP5JrQqxxyfhzq4uD4GmFM0H'
-
-# File paths
-model_path = os.path.join(os.path.dirname(__file__), 'model_rg_rf.joblib')
-columns_path = os.path.join(os.path.dirname(__file__), 'columns_ohe.joblib')
-
-# Function to download files from Google Drive
-def download_file_from_google_drive(file_id, destination):
-    download_url = f'https://drive.google.com/uc?id={file_id}'
-    gdown.download(download_url, destination, quiet=False)
-
-# Download the model file if not present
-if not os.path.exists(model_path):
-    with st.spinner('Downloading the model...'):
-        download_file_from_google_drive(model_file_id, model_path)
-
-# Download the columns file if not present
-if not os.path.exists(columns_path):
-    with st.spinner('Downloading the columns file...'):
-        download_file_from_google_drive(columns_file_id, columns_path)
-
-# Load the image
-image_path = os.path.join(os.path.dirname(__file__), 'real_estate_image.jpeg')
-image = Image.open(image_path)
+# Load Image
+image_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCfK1YMg9WyC3E1QSAD6PW7H23v6Hj3i9cGA&s'
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
 image = image.resize((700, 200))
 st.image(image, use_column_width=False, channels='RGB')
+
+# Paths to model and columns files in the GitHub repo
+model_path = 'model_lr.joblib'
+columns_path = 'columns_ohe.joblib'
 
 # Load the trained regression model and encoder
 model_loaded = False
